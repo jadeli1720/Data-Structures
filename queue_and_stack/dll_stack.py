@@ -152,7 +152,7 @@ class DoublyLinkedList:
         return max_value
 
 
-class Stack:
+class Stack: # --> LIFO
     def __init__(self):
         self.size = 0
         # Why is our DLL a good choice to store our elements?
@@ -161,13 +161,17 @@ class Stack:
 
     def push(self, value):
         self.size += 1
+        # values are always added to the "top"
         return self.storage.add_to_head(value)
 
     def pop(self):
-        return self.size.pop()
+        # if
+        if self.storage:
+            self.size -= 1
+            # values are always removed from the "top"
+            return self.storage.remove_from_head()
 
     def len(self):
         return self.size
-
 
 # What are stacks used for ---> recursion

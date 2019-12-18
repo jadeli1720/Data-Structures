@@ -16,18 +16,9 @@ class LRUCache:
         self.list = DoublyLinkedList()
         self.cache = {}
 
-    # def search(self, data):
-    #     current = self.head
-    #     found = False
-    #     while current and found is False:
-    #         if current.get_data() == data:
-    #             found = True
-    #         else:
-    #             current = current.get_next()
-    #     if current is None:
-    #         raise ValueError("Data not in list")
-    #     return current
-
+        # the current number of nodes!!!!
+        
+        # cache key --> node  node-value =>(key,value)
     """
     Retrieves the value associated with the given key. Also
     needs to move the key-value pair to the end of the order
@@ -36,12 +27,12 @@ class LRUCache:
     key-value pair doesn't exist in the cache.
     """
     def get(self, key): # Any item we access gets moved to the head of the cache
-        # access key:value pair
-        # move accessed pair to top of the cache --> move_to_front
-        # move other pairs down one spot in cache
-        # returns the value associated with that key or
-        # returns none if key:value pair doesn't exist
-        pass
+        # Key in Cache = Key in node => key:value pair
+        if key not in self.cache[key]: # check if cache is empty
+            return None 
+        self.cache[key] = node # Using the node to access the key
+        self.list.move_to_front(node) # move accessed pair to top of the cache --> move_to_front
+        return node.value[1] # returns the value associated with that key 
         
 
     """
@@ -49,9 +40,7 @@ class LRUCache:
     added pair should be considered the most-recently used *(at the head)
     entry in the cache. If the cache is already at max capacity
     before this entry is added, then the oldest entry in the
-    cache needs to be removed to make room. Additionally, in the
-    case that the key already exists in the cache, we simply
-    want to overwrite the old value associated with the key with
+    cache needs to be removed to make room. NEED TO ADD THIS NEXT PART: Additionally, in the case that the key already exists in the cache, we simply want to overwrite the old value associated with the key with
     the newly-specified value.
     """
     def set(self, key, value):#creating a key:value pair as a dictionary
@@ -63,4 +52,3 @@ class LRUCache:
            self.list.add_to_head(key)
 
 
-# LRUCache()

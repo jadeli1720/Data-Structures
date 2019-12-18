@@ -14,11 +14,11 @@ class LRUCache:
        
         self.max = limit #--> max number of nodes
         self.nodes = 0 #--> current number of nodes set to 0
-        self.list = DoublyLinkedList() # --> will hold [key:value] entries and give access to methods from dll
+        self.list = DoublyLinkedList() # --> will hold [key:value] entries, keep track of the order, and give access to methods from dll
         self.cache = {} # --> 
 
-        # the current number of nodes!!!!
-
+        # Defining the head as most-recently used, and tail as the oldest
+        # (key:value) pair = tuple 
     """
     Retrieves the value associated with the given key. Also
     needs to move the key-value pair to the end of the order
@@ -28,13 +28,13 @@ class LRUCache:
     """
     # What needs to be done:
         # [x] - get the value of a given key
-        # [x]- move [key:value] to the head --> most-recently used comes first
-        # [x] - return the value associated with the key or none if [key:value] != exist
+        # [x] - move (key:value) to the head --> most-recently used comes first
+        # [x] - return the value associated with the key or none if (key:value )!= exist
 
     def get(self, key):
-        ### Key in Cache = Key in node => key:value pair
+        ### Key in Cache = Key in node => (key:value) pair
                                 #            0    1
-        # cache key --> node  node-value =>[key:value]
+        # cache key --> node  node-value => (key:value) <-- tuple
 
         if key not in self.cache: # check if cache is empty
             return None 
@@ -52,8 +52,8 @@ class LRUCache:
     cache needs to be removed to make room. Additionally, in the case that the key already exists in the cache, we simply want to overwrite the old value associated with the key with the newly-specified value.
     """
     def set(self, key, value):#creating a key:value pair as a list or array
-        # [x] - Adds [key:pair] to cache
-        # [x] - Recently added [key:pair] should be at the head of the cache (most-recently used)
+        # [x] - Adds (key:value) to cache
+        # [x] - Recently added (key:value) should be at the head of the cache (most-recently used)
         # [x] - If cache == self.max, remove entry at the tail(oldest entry)
         # [x] - In case KEY ALREADY EXISTS, overwrite the old value associated with the key with the newly-specified value ****
 
@@ -61,17 +61,16 @@ class LRUCache:
         # If the key exists in self.cache
         if key in self.cache:
             node = self.cache[key] # Using the node to reference and access the key in the cache
-            node.value = (key, value) # setting the value of the node to a [key:value]
+            node.value = (key, value) # setting the value of the node to a (key:value). This is actually a tuple
             self.list.move_to_front(node)# move accessed pair to the head of the cache 
 
-        elif self.nodes == self.max: # If the cache is already at max capacity, remove it from the tail
-            del self.cache[self.list.tail.value[0]]
-            self.list.remove_from_tail() #remove node from tail
+        elif self.nodes == self.max: # If the cache is already at max capacity
+            del self.cache[self.list.tail.value[0]] # remove the node.value[0] from the tail
+            self.list.remove_from_tail() #remove node from the tail 
             self.nodes -= 1
-        
-        self.nodes += 1
-        value = (key,value)
-        self.list.add_to_head(value) # add the new [key:pair] to cache
-        self.cache[key] = self.list.head #add the node to the head of the cache
-            
+
+        value = (key,value) #referencing the (key:value) --> tuple
+        self.list.add_to_head(value) # add the new (key:value) to the head of the cache
+        self.cache[key] = self.list.head #putting the node in the dictionary
+        self.nodes += 1 # adding on to the number nodes   
 

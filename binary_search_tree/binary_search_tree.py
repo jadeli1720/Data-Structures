@@ -1,7 +1,7 @@
 import sys
-sys.path.append('../queue_and_stack')
-from dll_queue import Queue
-from dll_stack import Stack
+sys.path.append('../stack_dll')
+# from dll_queue import Queue
+# from stack_dll import Stack
 
 
 class BinarySearchTree:
@@ -12,19 +12,31 @@ class BinarySearchTree:
 
     # Insert the given value into the tree
     def insert(self, value):
-        current_node = self
-        print("Node",current_node,"Node Value" ,current_node.value)
-        # If inserting we must already have a tree/root
         
+        # print("Node",current_node,"Node Value" ,current_node.value)
 
-        if current_node.value < self.value:             #If value is less than self.value
-            if current_node.left is None:               #Go left if left tree/node is empty
-                current_node = BinarySearchTree(value)  # Recursion to keep going until empty node is found
-                return
+        # If inserting we must already have a tree/root <-- ?
+        #value = self.value
 
-        # If greater than or equal to then fo right, make a new tree/node if empty, otherwise
-        # keep going (recursion)
-        pass
+        # SIMPLIFY:
+        if value > self.value:                            # If value is less than self.value
+            if self.left == None:                         # If left node is empty
+                return self.left.insert(value)                   # Insert the value
+                # self.left = BinarySearchTree(value)        # Recursion to keep searching until empty node is found
+            else:
+                # return self.left.insert(value)
+                self.left = BinarySearchTree(value)      # Recursion:  keep searching until empty node is found
+
+        elif value >= self.value:
+            if self.right == None:
+                self.right = BinarySearchTree(value)
+                # return self.right.insert(value)
+            else:
+                # self.right = BinarySearchTree(value)
+                return self.right.insert(value)
+
+
+    
 
     # Return True if the tree contains the value
     # False if it does not

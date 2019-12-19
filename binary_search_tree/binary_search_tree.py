@@ -92,13 +92,31 @@ class BinarySearchTree:                              # worst case O(n), average 
 
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
-    def in_order_print(self, node): # Use for_each() --> research
+    def in_order_print(self, node): # Use for_each()? --> research
+        # print in all the values from low to high
         pass
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self, node): #annoying loops
-        pass
+        # instantiate a queue
+        queue = Queue()
+        # put root in the queue
+        queue.enqueue(node)
+        # while queue is not empty (meaning length in zero)
+        while queue.len() > 0:
+            # pop the root out of the front of the queue
+            current_node = queue.dequeue()
+            print(current_node.value)
+            # DO SOMETHING --> I.E PRINT value
+            # if left:
+            if current_node.left:
+                # add left to back of queue
+                queue.enqueue(current_node.left)
+            # if right:
+            if current_node.right:
+                # add right to back of queue
+                queue.enqueue(current_node.right)
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
@@ -106,17 +124,19 @@ class BinarySearchTree:                              # worst case O(n), average 
         # Instantiate the stack
         stack = Stack()
         # Put root node in stack 
-        stack.push(self)
-        # while stack not empty
-        while stack != None:
+        stack.push(node)
+        # while stack not empty (meaning length in zero)
+        while stack.len() > 0:
             # pop the root out of stack => stack.pop()
             current_node = stack.pop()
+            # DO SOMETHING --> I.E PRINT value
+            print(current_node.value)
             # if self.left:
-            if self.left:
+            if current_node.left:
                 # add left to the stack => stack.push()
                 stack.push(current_node.left)
             # if self.right:
-            if self.right:
+            if current_node.right:
                 # add left to the stack => stack.push()
                 stack.push(current_node.right)
 

@@ -180,11 +180,11 @@ class Queue:
     def __repr__(self):
         return f" {self.storage}"
 
-    def enqueue(self, value):
+    def enqueue(self, value): #similar to push
         self.size += 1
         return self.storage.add_to_tail(value)
 
-    def dequeue(self):
+    def dequeue(self): #similar to pop
         if self.size > 0:
             self.size -= 1
             return self.storage.remove_from_head()

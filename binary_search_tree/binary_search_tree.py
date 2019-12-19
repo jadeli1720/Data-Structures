@@ -92,9 +92,17 @@ class BinarySearchTree:                              # worst case O(n), average 
 
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
-    def in_order_print(self, node): # Use for_each()? --> research
-        # print in all the values from low to high
-        pass
+    def in_order_print(self, node): # 
+        # Travel left to the end of the tree
+        # if node is None --> return
+        if node == None:
+            return
+        # read node. value at end an repeat recursively
+        self.in_order_print(node.left)
+        print(node.value)
+        # recursion to the right
+        self.in_order_print(node.right)
+        
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
@@ -144,7 +152,7 @@ class BinarySearchTree:                              # worst case O(n), average 
     # Note: Research may be required
 
     # Print In-order recursive DFT
-    def pre_order_dft(self, node):
+    def pre_order_dft(self, node): # -->
         pass
 
     # Print Post-order recursive DFT

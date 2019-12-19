@@ -2,9 +2,9 @@
 # sys.path.append('../stack_dll')
 # from dll_queue import Queue
 # from stack_dll import Stack
+# any time you are cutting things in half is O(log n)
 
-
-class BinarySearchTree:
+class BinarySearchTree: # worst case O(n), average O(log n)
     def __init__(self, value):
         self.value = value
         self.left = None
@@ -36,17 +36,38 @@ class BinarySearchTree:
     # False if it does not
     def contains(self, target):
         # if target == self.value, return it,
+        
+        # a lot like binary search
+        if target == self.value:
+            return True
+        
         # go left or right based on smaller or bigger
-        # if target == self. value:
-
-        pass
+        # If target is bigger or smaller than the self.value
+        elif target > self.value:
+            if self.right != None: #check that its not a leaf
+                return self.right.contains(target)
+            else:
+                if self.right == None:
+                    return False
+            
+        elif target < self.value:
+            if self.left != None:
+                return self.left.contains(target)
+            else:
+                if self.left == None:
+                    return False
+            
 
     # Return the maximum value found in the tree
     def get_max(self):
         #  if right exists, go right
         # otherwise return self.value
         #  You can only go right for largest, and you know you are at the end of the tree when the node is a leaf and there are no more children.
-        pass
+        if self.right != None:
+            return self.right.get_max()
+        else:
+            return self.value 
+        
 
     # Call the function `cb` on the value of each node
     # You may use a RECURSIVE or iterative approach

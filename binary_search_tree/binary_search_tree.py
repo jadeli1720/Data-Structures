@@ -1,28 +1,26 @@
-# import sys
-# sys.path.append('../stack_dll')
-# from dll_queue import Queue
-# from stack_dll import Stack
-
+import sys
+sys.path.append('../queue_and_stack')
+from queue_and_stack import Queue
+from queue_and_stack import Stack
 
 # any time you are cutting things in half is O(log n)
 
-class BinarySearchTree: # worst case O(n), average case O(log n)
-    def __init__(self, value):
+class BinarySearchTree:                              # worst case O(n), average case O(log n)
+    def __init__(self, value: int):                  # restricting the input value to a number
         self.value = value
-        self.left = None    # use to traverse left ==> pointers
-        self.right = None   # use to traverse right ==> pointers
+        self.left = None                             # use to traverse left ==> pointers
+        self.right = None                            # use to traverse right ==> pointers
 
     # self is the node itself, while self.value is the value of that node
 
     # Insert the given value into the tree
     def insert(self, value):
-
         # SIMPLIFY:
         if  self.value > value:                       # If value is less than self.value
             if self.left == None:                     # If left node is empty
-                 self.left = BinarySearchTree(value)  # Recursion - keep searching until empty node is found
+                 self.left = BinarySearchTree(value)  # A new Binary Search Tree with our new value
             else:
-                return self.left.insert(value)        # Recursion - passing the value back into the insert() to check if again
+                return self.left.insert(value)        # Recursion - passing the value back into the insert() to check again if the node is empty or not on the left
 
         if  self.value <= value:
             if self.right == None:
@@ -34,55 +32,69 @@ class BinarySearchTree: # worst case O(n), average case O(log n)
     # Return True if the tree contains the value
     # False if it does not
     def contains(self, target):
-        # if target == self.value, return it,
-        
-        # a lot like binary search
-        if target == self.value:
-            return True
+        # if target == self.value, return True,
         # go left or right based on smaller or bigger
         # If target is bigger or smaller than the self.value
-        elif target > self.value:
-            if self.right != None: #check that its not a leaf
-                return self.right.contains(target)
-            else:
-                if self.right == None:
-                    return False
+        # a lot like binary search
+
+        # base case
+        if target == self.value:                      # If target == self.value
+            return True                               # return true
+        elif target > self.value:                     # if target > self.value
+            if self.right != None:                    # if node on the right isn't a leaf
+                return self.right.contains(target)    # recursively call contains to check the target value again
+            else:                                     # else if we've come to a leaf and still haven't found target value 
+                    return False                      # return False
             
-        elif target < self.value:
-            if self.left != None:
-                return self.left.contains(target)
-            else:
-                if self.left == None:
-                    return False
+        elif target < self.value:                     # if target < self.value
+            if self.left != None:                     # if node on the left isn't a leaf
+                return self.left.contains(target)     # recursively call contains to check the target value again
+            else:                                     # else if we've come to a leaf and still haven't found the target value                
+                    return False                      # return False
             
 
     # Return the maximum value found in the tree
     def get_max(self):
-        #  if right exists, go right
-        # otherwise return self.value
         #  You can only go right for largest, and you know you are at the end of the tree when the node is a leaf and there are no more children.
-        if self.right != None:
-            return self.right.get_max()
+
+        if self.right != None:                        #  if right node exists
+            return self.right.get_max()               # recursively call function again to keep going right. Make sure to return the recursive call
         else:
-            return self.value 
+            return self.value                         # otherwise return self.value
         
 
     # Call the function `cb` on the value of each node
     # You may use a RECURSIVE or iterative approach
-    def for_each(self, cb):
-        # Search each node
-        # Call cb on the value of each node
-        cb(self.value)
-        if self.right:
-            self.right.for_each(cb)
-        if self.left:
-            self.left.for_each(cb)
+    def for_each(self, cb):                            # Just did (sneakely) a Depth First Traversal
+        # Search each node in the entire tree
+        
+        # cb(self.value)                                 # Call cb on the value of each node
+        # if self.right:                                 # If there is a pointer on the right
+        #     self.right.for_each(cb)
+        # if self.left:                                  # If there is a pointer on the left
+        #     self.left.for_each(cb)
+
+        # Iterative solution: --> what do we need to use? -->need to import stack for this to work
+            # Need a loop and stack
+        stack = Stack()
+        stack.push(self)
+
+        # Loop --> when do we know we are done? when there is nothing in the stack
+        while stack.len() > 0:
+            current_node = stack.pop()
+            # Check if there is a left or right
+            if current_node.right:
+                stack.push(current_node.right)
+            if current_node.left:
+                stack.push(current_node.left)
+            cb(current_node.value)
+
 
     # DAY 2 Project -----------------------
 
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
-    def in_order_print(self, node): # Use for_each()
+    def in_order_print(self, node): # Use for_each() --> research
         pass
 
     # Print the value of every node, starting with the given node,

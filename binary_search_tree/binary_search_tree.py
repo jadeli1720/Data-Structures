@@ -68,27 +68,25 @@ class BinarySearchTree:                              # worst case O(n), average 
     def for_each(self, cb):                            # Just did (sneakely) a Depth First Traversal
         # Search each node in the entire tree
         
-        # cb(self.value)                                 # Call cb on the value of each node
-        # if self.right:                                 # If there is a pointer on the right
-        #     self.right.for_each(cb)
-        # if self.left:                                  # If there is a pointer on the left
-        #     self.left.for_each(cb)
+        cb(self.value)                                 # Call cb on the value of each node
+        if self.right:                                 # If there is a pointer on the right
+            self.right.for_each(cb)
+        if self.left:                                  # If there is a pointer on the left
+            self.left.for_each(cb)
 
         # Iterative solution: --> what do we need to use? -->need to import stack for this to work
             # Need a loop and stack
-        stack = Stack()
-        stack.push(self)
-
-        # Loop --> when do we know we are done? when there is nothing in the stack
-        while stack.len() > 0:
-            current_node = stack.pop()
-            # Check if there is a left or right
-            if current_node.right:
-                stack.push(current_node.right)
-            if current_node.left:
-                stack.push(current_node.left)
-            cb(current_node.value)
-
+        # stack = Stack()
+        # stack.push(self)
+        # # Loop --> when do we know we are done? when there is nothing in the stack
+        # while stack.len() > 0:
+        #     current_node = stack.pop()
+        #     # Check if there is a left or right
+        #     if current_node.right:
+        #         stack.push(current_node.right)
+        #     if current_node.left:
+        #         stack.push(current_node.left)
+        #     cb(current_node.value)
 
     # DAY 2 Project -----------------------
 
@@ -105,7 +103,22 @@ class BinarySearchTree:                              # worst case O(n), average 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
     def dft_print(self, node):
-        pass
+        # Instantiate the stack
+        stack = Stack()
+        # Put root node in stack 
+        stack.push(self)
+        # while stack not empty
+        while stack != None:
+            # pop the root out of stack => stack.pop()
+            current_node = stack.pop()
+            # if self.left:
+            if self.left:
+                # add left to the stack => stack.push()
+                stack.push(current_node.left)
+            # if self.right:
+            if self.right:
+                # add left to the stack => stack.push()
+                stack.push(current_node.right)
 
     # STRETCH Goals -------------------------
     # Note: Research may be required
